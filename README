@@ -1,6 +1,5 @@
-SocialSignin provider support for Tumblr - a thin wrapper around Sam Douglass's spring-social-tumblr module allowing
-autodiscovery and registration of spring social components in a SocialSignin webapp 
-( https://github.com/socialsignin/mvn-archetype-socialsignin-webapp )
+SocialSignin provider support for Tumblr - a thin wrapper around Sam Douglass's spring-social-tumblr module allowing autodiscovery and registration 
+of spring social components in a SocialSignin webapp ( https://github.com/socialsignin/mvn-archetype-socialsignin-webapp )
 
 Thanks to Sam Douglass ( https://github.com/sdouglass ) for developing the https://github.com/sdouglass/spring-social-tumblr 
 module and for helping us showcase logging in with /connecting to Tumblr in the SocialSignin showcase
