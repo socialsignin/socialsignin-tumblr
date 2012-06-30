@@ -7,11 +7,16 @@ import org.springframework.social.tumblr.api.impl.TumblrTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TumblrProviderService extends AbstractProviderService<Tumblr> {
+public class TumblrProviderService extends AbstractProviderService<Tumblr,TumblrProviderConfig> {
 
-	@Override
-	public Class<Tumblr> getApiClass() {
-		return Tumblr.class;
+	
+
+	public TumblrProviderService() {
+		super();
+	}
+
+	public TumblrProviderService(TumblrProviderConfig providerConfig) {
+		super(providerConfig);
 	}
 
 	@Override

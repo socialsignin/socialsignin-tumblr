@@ -16,12 +16,17 @@
 package org.socialsignin.provider.tumblr;
 
 import org.socialsignin.provider.AbstractProviderConfig;
+import org.socialsignin.springsocial.security.TumblrConnectInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.connect.ConnectionFactory;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ConnectInterceptor;
 import org.springframework.social.tumblr.api.Tumblr;
+import org.springframework.social.tumblr.api.impl.TumblrTemplate;
 import org.springframework.social.tumblr.connect.TumblrConnectionFactory;
 /**
 * @author Michael Lavelle
@@ -29,7 +34,7 @@ import org.springframework.social.tumblr.connect.TumblrConnectionFactory;
 @Configuration
 public class TumblrProviderConfig extends AbstractProviderConfig<Tumblr> {
 
-	@Autowired
+	@Autowired(required=false)
 	private TumblrConnectInterceptor tumblrConnectInterceptor;
 
 	@Value("${tumblr.consumerKey}")
@@ -38,7 +43,55 @@ public class TumblrProviderConfig extends AbstractProviderConfig<Tumblr> {
 	@Value("${tumblr.consumerSecret}")
 	private String tumblrConsumerSecret;
 	
+	public TumblrProviderConfig() {
+		super();
+	}
+	
+	public TumblrProviderConfig(String tumblrConsumerKey,
+			Tumblr authenticatedApi) {
+		super(authenticatedApi);
+		this.tumblrConsumerKey = tumblrConsumerKey;
+	}
+	
+	public TumblrProviderConfig(String tumblrConsumerKey,String tumblrConsumerSecret,String accessToken,String accessTokenSecret) {
+		super(new TumblrTemplate(tumblrConsumerKey,tumblrConsumerSecret,accessToken,accessTokenSecret));
+		this.tumblrConsumerKey = tumblrConsumerKey;
+		this.tumblrConsumerSecret = tumblrConsumerSecret;
+	}
+	
+	public TumblrProviderConfig(String tumblrConsumerKey,String tumblrConsumerSecret,ConnectionRepository connectionRepository,
+			ConnectionFactoryRegistry connectionFactoryRegistry) {
+		super(connectionRepository, connectionFactoryRegistry);
+		this.tumblrConsumerSecret = tumblrConsumerSecret;
+		this.tumblrConsumerSecret  = tumblrConsumerSecret;
+	}
 
+	public void setTumblrConsumerKey(String tumblrConsumerKey) {
+		this.tumblrConsumerKey = tumblrConsumerKey;
+	}
+
+	public void setTumblrConsumerSecret(String tumblrConsumerSecret) {
+		this.tumblrConsumerSecret = tumblrConsumerSecret;
+	}
+
+	public TumblrProviderConfig(String tumblrConsumerKey,String tumblrConsumerSecret,ConnectionRepository connectionRepository,
+			UsersConnectionRepository usersConnectionRepository,
+			ConnectionFactoryRegistry connectionFactoryRegistry) {
+		super(connectionRepository, usersConnectionRepository,
+				connectionFactoryRegistry);
+		this.tumblrConsumerKey = tumblrConsumerSecret;
+		this.tumblrConsumerSecret  = tumblrConsumerSecret;
+	}
+	
+	public TumblrProviderConfig(String tumblrConsumerKey,String tumblrConsumerSecret,String userId,	UsersConnectionRepository usersConnectionRepository,
+			ConnectionFactoryRegistry connectionFactoryRegistry) {
+		super(userId,usersConnectionRepository,
+				connectionFactoryRegistry);
+		this.tumblrConsumerKey = tumblrConsumerKey;
+		this.tumblrConsumerSecret  = tumblrConsumerSecret;
+	}
+	
+	
 	@Override
 	protected ConnectionFactory<Tumblr> createConnectionFactory() {
 		return new TumblrConnectionFactory(tumblrConsumerKey,
@@ -48,6 +101,11 @@ public class TumblrProviderConfig extends AbstractProviderConfig<Tumblr> {
 	@Override
 	protected ConnectInterceptor<Tumblr> getConnectInterceptor() {
 		return tumblrConnectInterceptor;
+	}
+
+	@Override
+	public Class<Tumblr> getApiClass() {
+		return Tumblr.class;
 	}
 
 }
