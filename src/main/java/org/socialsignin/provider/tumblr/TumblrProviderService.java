@@ -6,6 +6,8 @@ import org.springframework.social.tumblr.api.Tumblr;
 import org.springframework.social.tumblr.api.impl.TumblrTemplate;
 import org.springframework.stereotype.Service;
 
+import sun.security.krb5.Config;
+
 @Service
 public class TumblrProviderService extends AbstractProviderService<Tumblr,TumblrProviderConfig> {
 
@@ -21,8 +23,7 @@ public class TumblrProviderService extends AbstractProviderService<Tumblr,Tumblr
 
 	@Override
 	public Tumblr getUnauthenticatedApi() {
-		// Currently TumblrTemplate doesn't support creation without authentication, so no nauthenticated api available as yet
-		return null;
+		return new TumblrTemplate(providerConfig.getTumblrConsumerKey());
 	}
 
 }

@@ -39,7 +39,7 @@ public class TumblrProviderConfig extends AbstractProviderConfig<Tumblr> {
 
 	@Value("${tumblr.consumerKey}")
 	private String tumblrConsumerKey;
-	
+
 	@Value("${tumblr.consumerSecret}")
 	private String tumblrConsumerSecret;
 	
@@ -106,6 +106,14 @@ public class TumblrProviderConfig extends AbstractProviderConfig<Tumblr> {
 	@Override
 	public Class<Tumblr> getApiClass() {
 		return Tumblr.class;
+	}
+	
+	public String getTumblrConsumerKey() {
+		return tumblrConsumerKey;
+	}
+
+	public String getTumblrConsumerSecret() {
+		return tumblrConsumerSecret;
 	}
 
 }
